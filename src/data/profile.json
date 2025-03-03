@@ -1,0 +1,23 @@
+Sure, here's the contents for the file `/shivansh-portfolio/shivansh-portfolio/src/data/profile.json`:
+
+{
+  "name": "Shivansh Vishwakarma",
+  "degree": "BTech CSE",
+  "year": "3rd Year",
+  "college": "Guru Nanak Dev Engineering College",
+  "location": "Ludhiana, Punjab",
+  "contact": {
+    "email": "",
+    "phone": ""
+  },
+  "education": [
+    {
+      "institution": "Guru Nanak Dev Engineering College",
+      "degree": "BTech in Computer Science",
+      "year": "2020 - Present"
+    }
+  ],
+  "experience": [],
+  "projects": [],
+  "skills": []
+}
