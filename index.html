@@ -9,14 +9,33 @@
 </head>
 <body>
     <header id="header"></header>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About Me</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
     <main>
         <section id="home">
+            <div class="animated-bg">
+                <!-- Add 15 spans for floating elements -->
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
             <div class="hero">
                 <div class="profile-picture">
                     <img src="assets/images/Shivansh Profile.JPG" alt="Shivansh Vishwakarma">
                 </div>
                 <h1>Shivansh Vishwakarma</h1>
-                <p>BTech CSE Student | Developer | Tech Enthusiast</p>
+                <p class="subtitle">BTech CSE Student | Developer | Tech Enthusiast</p>
+                <p class="tagline">Turning Ideas into Impact</p>
                 <div class="social-links">
                     <a href="https://github.com/07shivansh" target="_blank"><i class="fab fa-github"></i></a>
                     <a href="https://www.linkedin.com/in/shivansh-vishwakarma-a219a02a8/" target="_blank"><i class="fab fa-linkedin"></i></a>
@@ -30,10 +49,20 @@
             </div>
         </section>
         <section id="about">
+            <div class="about-bg-pattern"></div>
             <div class="container">
                 <h2>About Me</h2>
-                <p>I'm a third-year Computer Science Engineering student at Guru Nanak Dev Engineering College, Ludhiana, Punjab. Passionate about technology and software development, I focus on creating innovative solutions that make a difference.</p>
-                <p>My hometown is Pratapgarh, Uttar Pradesh, I enjoy playing Cricket and Badminton, participating in Esports, listening to music, and reading story books in my free time.</p>
+                <div class="about-content">
+                    <p>
+                        I'm a <span class="highlight">third-year Computer Science Engineering student</span> at Guru Nanak Dev Engineering College, Ludhiana, Punjab, with a deep passion for technology and software development. I strive to build innovative solutions that have a real-world impact.
+                    </p>
+                    <p>
+                        Hailing from Pratapgarh, Uttar Pradesh, I have a keen interest in <span class="highlight">AI, computational technologies</span>, and their applications in agriculture and environmental science.
+                    </p>
+                    <p>
+                        Beyond academics, I enjoy playing Cricket and Badminton, competing in Esports, exploring new music, and immersing myself in storybooks. With a curiosity-driven mindset, I constantly seek opportunities to learn, grow, and contribute to the tech community.
+                    </p>
+                </div>
             </div>
         </section>
         <section id="education"></section>
@@ -85,7 +114,7 @@
                 <h2>Technical Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-category">
-                        <h3>Programming Languages</h3>
+                        <h3><i class="fas fa-code"></i> Programming Languages</h3>
                         <ul>
                             <li>C/C++</li>
                             <li>Python</li>
@@ -94,7 +123,7 @@
                         </ul>
                     </div>
                     <div class="skill-category">
-                        <h3>Tools & OS</h3>
+                        <h3><i class="fas fa-tools"></i> Tools & OS</h3>
                         <ul>
                             <li>Git</li>
                             <li>Jupyter Notebook</li>
@@ -104,7 +133,7 @@
                         </ul>
                     </div>
                     <div class="skill-category">
-                        <h3>Libraries/Frameworks</h3>
+                        <h3><i class="fas fa-layer-group"></i> Libraries/Frameworks</h3>
                         <ul>
                             <li>Pandas</li>
                             <li>Numpy</li>
@@ -114,7 +143,7 @@
                         </ul>
                     </div>
                     <div class="skill-category">
-                        <h3>Web Development</h3>
+                        <h3><i class="fas fa-globe"></i> Web Development</h3>
                         <ul>
                             <li>HTML</li>
                             <li>CSS</li>
@@ -130,11 +159,17 @@
                 <div class="contact-info">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:vishivansh7@gmail.com">vishivansh7@gmail.com</a>
+                        <div class="contact-details">
+                            <a href="mailto:shivansh2215170@gndec.ac.in">shivansh2215170@gndec.ac.in</a>
+                            <span class="email-label">Academic</span>
+                        </div>
                     </div>
                     <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Pratapgarh, Uttar Pradesh</p>
+                        <i class="fas fa-envelope-open"></i>
+                        <div class="contact-details">
+                            <a href="mailto:vishivansh7@gmail.com">vishivansh7@gmail.com</a>
+                            <span class="email-label">Personal</span>
+                        </div>
                     </div>
                     <div class="social-links">
                         <a href="https://github.com/07shivansh" target="_blank"><i class="fab fa-github"></i></a>
