@@ -98,4 +98,59 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 2000);
         });
     }
+
+    // Matrix rain effect
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+    const characters = matrix.split("");
+    const fontSize = 14;
+    const columns = canvas.width/fontSize;
+    const drops = [];
+
+    for(let x = 0; x < columns; x++)
+        drops[x] = 1;
+
+    function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.04)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = "#0F0";
+        ctx.font = fontSize + "px monospace";
+
+        for(let i = 0; i < drops.length; i++) {
+            const text = characters[Math.floor(Math.random()*characters.length)];
+            ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+            
+            if(drops[i]*fontSize > canvas.height && Math.random() > 0.975)
+                drops[i] = 0;
+            
+            drops[i]++;
+        }
+    }
+
+    setInterval(draw, 35);
+
+    // Enhanced scroll animations
+    const enhancedObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.transform = 'none';
+                entry.target.style.opacity = '1';
+                
+                // Add glitch effect on intersection
+                if (entry.target.classList.contains('project-card')) {
+                    entry.target.style.animation = 'glitch 0.3s cubic-bezier(.25, .46, .45, .94)';
+                }
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.project-card, .skill-category').forEach(element => {
+        enhancedObserver.observe(element);
+    });
 });
