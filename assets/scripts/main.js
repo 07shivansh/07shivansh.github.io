@@ -153,4 +153,125 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.project-card, .skill-category').forEach(element => {
         enhancedObserver.observe(element);
     });
+
+    // 3D card tilt effect
+    const cards = document.querySelectorAll('.project-card, .education-card, .experience-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const angleY = (x - centerX) / 20;
+            const angleX = (centerY - y) / 20;
+            
+            this.style.transform = `rotateY(${angleY}deg) rotateX(${angleX}deg) translateZ(10px)`;
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+        });
+    });
+
+    // Add digital data streams to skills section
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+        const dataStreamCanvas = document.createElement('canvas');
+        dataStreamCanvas.id = 'data-stream-canvas';
+        dataStreamCanvas.style.position = 'absolute';
+        dataStreamCanvas.style.top = '0';
+        dataStreamCanvas.style.left = '0';
+        dataStreamCanvas.style.width = '100%';
+        dataStreamCanvas.style.height = '100%';
+        dataStreamCanvas.style.opacity = '0.08';
+        dataStreamCanvas.style.zIndex = '0';
+        
+        // Insert canvas as first child of skills section
+        skillsSection.insertBefore(dataStreamCanvas, skillsSection.firstChild);
+        
+        // Initialize data stream animation
+        const dataCtx = dataStreamCanvas.getContext('2d');
+        const dataPoints = [];
+        const dataPointsCount = 100;
+        
+        // Set canvas dimensions
+        function setCanvasDimensions() {
+            dataStreamCanvas.width = skillsSection.offsetWidth;
+            dataStreamCanvas.height = skillsSection.offsetHeight;
+        }
+        
+        setCanvasDimensions();
+        window.addEventListener('resize', setCanvasDimensions);
+        
+        // Create data points
+        for (let i = 0; i < dataPointsCount; i++) {
+            dataPoints.push({
+                x: Math.random() * dataStreamCanvas.width,
+                y: Math.random() * dataStreamCanvas.height,
+                speed: Math.random() * 2 + 0.5,
+                size: Math.random() * 2 + 1,
+                color: Math.random() > 0.5 ? '#3498db' : '#2ecc71'
+            });
+        }
+        
+        // Draw data streams
+        function drawDataStreams() {
+            dataCtx.clearRect(0, 0, dataStreamCanvas.width, dataStreamCanvas.height);
+            
+            // Draw lines between points
+            dataCtx.beginPath();
+            for (let i = 0; i < dataPoints.length; i++) {
+                const point = dataPoints[i];
+                
+                // Find nearby points and connect them with lines
+                for (let j = i + 1; j < dataPoints.length; j++) {
+                    const otherPoint = dataPoints[j];
+                    const dx = point.x - otherPoint.x;
+                    const dy = point.y - otherPoint.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        dataCtx.moveTo(point.x, point.y);
+                        dataCtx.lineTo(otherPoint.x, otherPoint.y);
+                    }
+                }
+                
+                // Move points upwards
+                point.y -= point.speed;
+                
+                // Reset position when point goes off screen
+                if (point.y < -10) {
+                    point.y = dataStreamCanvas.height + 10;
+                    point.x = Math.random() * dataStreamCanvas.width;
+                }
+            }
+            
+            dataCtx.strokeStyle = 'rgba(52, 152, 219, 0.3)';
+            dataCtx.lineWidth = 0.5;
+            dataCtx.stroke();
+            
+            // Draw points
+            for (const point of dataPoints) {
+                dataCtx.beginPath();
+                dataCtx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
+                dataCtx.fillStyle = point.color;
+                dataCtx.fill();
+            }
+            
+            requestAnimationFrame(drawDataStreams);
+        }
+        
+        // Start animation if skills section is visible
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                drawDataStreams();
+            }
+        }, { threshold: 0.1 });
+        
+        observer.observe(skillsSection);
+    }
 });

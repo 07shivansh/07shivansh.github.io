@@ -1,0 +1,55 @@
+.animate-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.title-animate {
+    position: relative;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.title-animate::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--accent-color, #e74c3c);
+    transition: width 1s ease 0.3s;
+}
+
+.title-animate.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.title-animate.animate-in::after {
+    width: 60px;
+}
+
+/* Staggered animations for grid items */
+.project-grid .project-card:nth-child(1) { transition-delay: 0.1s; }
+.project-grid .project-card:nth-child(2) { transition-delay: 0.2s; }
+.project-grid .project-card:nth-child(3) { transition-delay: 0.3s; }
+
+.skills-grid .skill-category:nth-child(1) { transition-delay: 0.1s; }
+.skills-grid .skill-category:nth-child(2) { transition-delay: 0.2s; }
+.skills-grid .skill-category:nth-child(3) { transition-delay: 0.3s; }
+.skills-grid .skill-category:nth-child(4) { transition-delay: 0.4s; }
+
+.education-timeline .education-card:nth-child(1) { transition-delay: 0.1s; }
+.education-timeline .education-card:nth-child(2) { transition-delay: 0.2s; }
+.education-timeline .education-card:nth-child(3) { transition-delay: 0.3s; }
+
+.about-content p:nth-child(1) { transition-delay: 0.1s; }
+.about-content p:nth-child(2) { transition-delay: 0.2s; }
+.about-content p:nth-child(3) { transition-delay: 0.3s; }

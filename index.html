@@ -7,7 +7,12 @@
     <meta name="description" content="Portfolio website of Shivansh Vishwakarma - BTech CSE Student and Developer">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="./assets/styles/main.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.2.3/particles.min.js"></script>
+    <link rel="stylesheet" href="./assets/styles/scroll-animations.css">
+    <link rel="stylesheet" href="./assets/styles/particle-network.css">
+    <link rel="stylesheet" href="./assets/styles/3d-effects.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <header id="header">
@@ -22,8 +27,9 @@
                     <span></span>
                 </button>
                 <div class="nav-links">
-                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#home" class="nav-link active">Home</a>
                     <a href="#about" class="nav-link">About Me</a>
+                    <a href="#education" class="nav-link">Education</a>
                     <a href="#experience" class="nav-link">Experience</a>
                     <a href="#projects" class="nav-link">Projects</a>
                     <a href="#skills" class="nav-link">Skills</a>
@@ -37,26 +43,28 @@
     </div>
     <main>
         <section id="home">
+            <div class="hero-bg"></div>
             <div class="animated-bg">
-                <!-- Add 15 spans for floating elements -->
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span>
-                <span></span><span></span><span></span><span></span><span></span>
+                <canvas id="particle-network"></canvas>
+                <canvas id="binary-rain"></canvas>
             </div>
             <div class="hero">
                 <div class="profile-picture">
-                    <img src="assets/images/Shivansh Profile.JPG" alt="Shivansh Vishwakarma">
+                    <div class="profile-frame"></div>
+                    <div class="profile-picture-inner">
+                        <img src="assets/images/Shivansh Profile.JPG" alt="Shivansh Vishwakarma">
+                    </div>
                 </div>
                 <h1>Shivansh Vishwakarma</h1>
                 <p class="subtitle">BTech CSE Student | Developer | Tech Enthusiast</p>
                 <p class="tagline">Turning Ideas into Impact</p>
                 <div class="social-links">
-                    <a href="https://github.com/07shivansh" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/shivansh-vishwakarma-a219a02a8/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="mailto:vishivansh7@gmail.com"><i class="fas fa-envelope"></i></a>
+                    <a href="https://github.com/07shivansh" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/shivansh-vishwakarma-a219a02a8/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:vishivansh7@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
                 </div>
                 <div class="resume-button">
-                    <a href="assets/documents/UpdatedResume.pdf" download class="download-btn">
+                    <a href="assets/documents/Shivansh Resume.pdf" download class="download-btn">
                         <i class="fas fa-download"></i> View Resume
                     </a>
                 </div>
@@ -67,9 +75,8 @@
             <div class="circuit-pattern"></div>
         </div>
         <section id="about">
-            <div class="about-bg-pattern"></div>
             <div class="container">
-                <h2>About Me</h2>
+                <h2 data-heading="WHO I AM">About Me</h2>
                 <div class="about-content">
                     <p>
                         I'm a <span class="highlight">third-year Computer Science Engineering student</span> at Guru Nanak Dev Engineering College, Ludhiana, Punjab, with a deep passion for technology and software development. I strive to build innovative solutions that have a real-world impact.
@@ -83,10 +90,48 @@
                 </div>
             </div>
         </section>
-        <section id="education"></section>
+        <section id="education">
+            <div class="container">
+                <h2 data-heading="ACADEMIC JOURNEY">Education</h2>
+                <div class="education-timeline">
+                    <div class="education-card">
+                        <div class="education-header">
+                            <h3>B.Tech in Computer Science Engineering</h3>
+                            <p class="institution">Guru Nanak Dev Engineering College, Ludhiana</p>
+                            <p class="duration">2022 - Present</p>
+                        </div>
+                        <div class="education-content">
+                            <p>Currently pursuing my Bachelor's degree in Computer Science Engineering.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="education-card">
+                        <div class="education-header">
+                            <h3>Class XII (Senior Secondary)</h3>
+                            <p class="institution">New Angels Sr. Sec. School, Pratapgarh</p>
+                            <p class="duration">2021</p>
+                        </div>
+                        <div class="education-content">
+                            <p>Completed senior secondary education with <span class="highlight">94%</span> marks.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="education-card">
+                        <div class="education-header">
+                            <h3>Class X (Secondary)</h3>
+                            <p class="institution">Jawahar Navodaya Vidyalaya, Pratapgarh</p>
+                            <p class="duration">2019</p>
+                        </div>
+                        <div class="education-content">
+                            <p>Completed secondary education with <span class="highlight">87.8%</span> marks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         <section id="experience">
             <div class="container">
-                <h2>Experience</h2>
+                <h2 data-heading="WORK HISTORY">Experience</h2>
                 <div class="experience-card">
                     <div class="experience-header">
                         <h3>Research Intern</h3>
@@ -104,32 +149,65 @@
         </section>
         <section id="projects">
             <div class="container">
-                <h2>Projects</h2>
+                <h2 data-heading="WHAT I'VE BUILT">Projects</h2>
                 <div class="project-grid">
                     <div class="project-card">
-                        <h3>EduAI</h3>
+                        <div class="project-header">
+                            <h3 class="project-title">EduAI</h3>
+                            <div class="project-links">
+                                <a href="#" class="project-link" aria-label="GitHub repository"><i class="fab fa-github"></i></a>
+                                <a href="#" class="project-link" aria-label="Live demo"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
                         <p class="project-date">February 2025</p>
-                        <p>EduAI provides AI-driven guidance with a text editor, helping students learn programming without showing full code.</p>
-                        <p class="tech-stack">HTML • CSS • JavaScript • LLMs • Flask</p>
+                        <p class="project-desc">EduAI provides AI-driven guidance with a text editor, helping students learn programming without showing full code.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">LLMs</span>
+                            <span class="tech-tag">Flask</span>
+                        </div>
                     </div>
                     <div class="project-card">
-                        <h3>EdTech Buddy</h3>
+                        <div class="project-header">
+                            <h3 class="project-title">EdTech Buddy</h3>
+                            <div class="project-links">
+                                <a href="#" class="project-link" aria-label="GitHub repository"><i class="fab fa-github"></i></a>
+                                <a href="#" class="project-link" aria-label="Live demo"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
                         <p class="project-date">March 2024</p>
-                        <p>Personalized career guidance post-12th using CBSE's 'Compendium of courses after 10+2'.</p>
-                        <p class="tech-stack">HTML • CSS • JavaScript • BotPress</p>
+                        <p class="project-desc">Personalized career guidance post-12th using CBSE's 'Compendium of courses after 10+2'.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                            <span class="tech-tag">BotPress</span>
+                        </div>
                     </div>
                     <div class="project-card">
-                        <h3>Hope Harbor</h3>
+                        <div class="project-header">
+                            <h3 class="project-title">Hope Harbor</h3>
+                            <div class="project-links">
+                                <a href="#" class="project-link" aria-label="GitHub repository"><i class="fab fa-github"></i></a>
+                                <a href="#" class="project-link" aria-label="Live demo"><i class="fas fa-external-link-alt"></i></a>
+                            </div>
+                        </div>
                         <p class="project-date">January 2024</p>
-                        <p>Google Solution Challenge 2024 submission providing information about nearest food/shelter to needy people.</p>
-                        <p class="tech-stack">HTML • CSS • JavaScript</p>
+                        <p class="project-desc">Google Solution Challenge 2024 submission providing information about nearest food/shelter to needy people.</p>
+                        <div class="tech-stack">
+                            <span class="tech-tag">HTML</span>
+                            <span class="tech-tag">CSS</span>
+                            <span class="tech-tag">JavaScript</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         <section id="skills">
             <div class="container">
-                <h2>Technical Skills</h2>
+                <h2 data-heading="WHAT I KNOW">Technical Skills</h2>
                 <div class="skills-grid">
                     <div class="skill-category">
                         <h3><i class="fas fa-code"></i> Programming Languages</h3>
@@ -151,7 +229,7 @@
                         </ul>
                     </div>
                     <div class="skill-category">
-                        <h3><i class="fas fa-layer-group"></i> Libraries/Frameworks</h3>
+                        <h3><i class="fas fa-layer-group"></i> Libraries/Framework</h3>
                         <ul>
                             <li>Pandas</li>
                             <li>Numpy</li>
@@ -173,8 +251,8 @@
         </section>
         <section id="contact">
             <div class="container">
-                <h2>Contact Me</h2>
-                <div class="contact-info">
+                <h2 data-heading="GET IN TOUCH">Contact Me</h2>
+                <div class="contact-info glass-effect">
                     <div class="contact-item">
                         <i class="fas fa-envelope"></i>
                         <div class="contact-details">
@@ -190,13 +268,23 @@
                         </div>
                     </div>
                     <div class="social-links">
-                        <a href="https://github.com/07shivansh" target="_blank"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/shivansh-vishwakarma-a219a02a8/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/07shivansh" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/shivansh-vishwakarma-a219a02a8/" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2024 Shivansh Vishwakarma. All Rights Reserved.</p>
+                <p class="footer-tagline">Built with <i class="fas fa-heart"></i> and <i class="fas fa-code"></i></p>
+            </div>
+        </div>
+    </footer>
     <script src="assets/scripts/main.js"></script>
+    <script src="assets/scripts/scroll-animations.js"></script>
+    <script src="assets/scripts/particle-network.js"></script>
 </body>
 </html>
