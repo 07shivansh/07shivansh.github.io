@@ -157,24 +157,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3D card tilt effect
     const cards = document.querySelectorAll('.project-card, .education-card, .experience-card');
     
-    cards.forEach(card => {
-        card.addEventListener('mousemove', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            const angleY = (x - centerX) / 20;
-            const angleX = (centerY - y) / 20;
-            
-            this.style.transform = `rotateY(${angleY}deg) rotateX(${angleX}deg) translateZ(10px)`;
-        });
+    function handleMouseMove(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
         
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
-        });
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const angleY = (x - centerX) / 20;
+        const angleX = (centerY - y) / 20;
+        
+        this.style.transform = `rotateY(${angleY}deg) rotateX(${angleX}deg) translateZ(10px)`;
+    }
+    
+    function handleMouseLeave() {
+        this.style.transform = 'rotateY(0deg) rotateX(0deg) translateZ(0)';
+    }
+    
+    cards.forEach(card => {
+        card.addEventListener('mousemove', handleMouseMove);
+        card.addEventListener('mouseleave', handleMouseLeave);
     });
 
     // Add digital data streams to skills section
@@ -196,7 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Initialize data stream animation
         const dataCtx = dataStreamCanvas.getContext('2d');
         const dataPoints = [];
-        const dataPointsCount = 100;
+        let dataPointsCount = 100;
         
         // Set canvas dimensions
         function setCanvasDimensions() {
@@ -220,15 +223,28 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Draw data streams
         function drawDataStreams() {
+            const rect = skillsSection.getBoundingClientRect();
+            if (
+                rect.bottom < 0 ||
+                rect.top > window.innerHeight ||
+                rect.right < 0 ||
+                rect.left > window.innerWidth
+            ) {
+                requestAnimationFrame(drawDataStreams);
+                return;
+            }
+            
             dataCtx.clearRect(0, 0, dataStreamCanvas.width, dataStreamCanvas.height);
             
             // Draw lines between points
             dataCtx.beginPath();
+            const maxConnections = isMobile ? 2 : 5;
+            
             for (let i = 0; i < dataPoints.length; i++) {
                 const point = dataPoints[i];
+                let connections = 0;
                 
-                // Find nearby points and connect them with lines
-                for (let j = i + 1; j < dataPoints.length; j++) {
+                for (let j = i + 1; j < dataPoints.length && connections < maxConnections; j++) {
                     const otherPoint = dataPoints[j];
                     const dx = point.x - otherPoint.x;
                     const dy = point.y - otherPoint.y;
@@ -237,13 +253,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (distance < 100) {
                         dataCtx.moveTo(point.x, point.y);
                         dataCtx.lineTo(otherPoint.x, otherPoint.y);
+                        connections++;
                     }
                 }
                 
-                // Move points upwards
                 point.y -= point.speed;
                 
-                // Reset position when point goes off screen
                 if (point.y < -10) {
                     point.y = dataStreamCanvas.height + 10;
                     point.x = Math.random() * dataStreamCanvas.width;
@@ -254,7 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dataCtx.lineWidth = 0.5;
             dataCtx.stroke();
             
-            // Draw points
             for (const point of dataPoints) {
                 dataCtx.beginPath();
                 dataCtx.arc(point.x, point.y, point.size, 0, Math.PI * 2);
@@ -265,7 +279,6 @@ document.addEventListener('DOMContentLoaded', () => {
             requestAnimationFrame(drawDataStreams);
         }
         
-        // Start animation if skills section is visible
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 drawDataStreams();
@@ -274,4 +287,56 @@ document.addEventListener('DOMContentLoaded', () => {
         
         observer.observe(skillsSection);
     }
+
+    // Mobile optimizations for main.js
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+        dataPointsCount = 50;
+        
+        cards.forEach(card => {
+            card.removeEventListener('mousemove', handleMouseMove);
+            card.removeEventListener('mouseleave', handleMouseLeave);
+        });
+        
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        document.querySelectorAll('.profile-frame').forEach(el => {
+            el.style.animation = 'rotateSlow 20s linear infinite';
+        });
+        
+        setInterval(draw, 50);
+    } else {
+        setInterval(draw, 35);
+    }
+    
+    function fixIOSVhBug() {
+        const vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+        
+        const heroSection = document.getElementById('home');
+        if (heroSection) {
+            heroSection.style.height = 'calc(var(--vh, 1vh) * 100)';
+        }
+    }
+    
+    fixIOSVhBug();
+    window.addEventListener('resize', fixIOSVhBug);
+    
+    document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('touchstart', function() {}, { passive: true });
+    });
+    
+    window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+            if (canvas) {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            if (dataStreamCanvas) {
+                setCanvasDimensions();
+            }
+            fixIOSVhBug();
+        }, 200);
+    });
 });

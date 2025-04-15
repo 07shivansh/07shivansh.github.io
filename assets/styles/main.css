@@ -15,6 +15,9 @@
     --border-radius: 12px;
     --accent-gradient: linear-gradient(90deg, var(--accent-color), var(--accent-color-secondary));
     --glow-effect: 0 0 15px rgba(6, 182, 212, 0.5), 0 0 30px rgba(6, 182, 212, 0.2);
+    --header-height: 70px;
+    --section-padding-mobile: 3rem;
+    --card-padding-mobile: 1.2rem;
 }
 
 * {
@@ -30,6 +33,13 @@ body {
     color: var(--text-primary);
     background-color: var(--primary-bg);
     overflow-x: hidden;
+}
+
+html, body {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
 }
 
 .container {
@@ -1137,6 +1147,8 @@ a:not(.btn, .nav-link, .social-link):hover::after {
 
     .nav-links.active {
         right: 0;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+        border-left: 1px solid var(--border-color);
     }
     
     .nav-link {
@@ -1223,4 +1235,108 @@ footer {
         linear-gradient(to right, var(--border-color) 1px, transparent 1px);
     background-size: 40px 40px;
     opacity: 0.03;
+}
+
+/* Mobile optimization improvements */
+
+/* Improve text readability on small screens */
+@media (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
+    
+    .hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero .subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .hero .tagline {
+        font-size: 1.5rem;
+    }
+    
+    section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+    
+    .container {
+        padding: 2rem 1.5rem;
+    }
+    
+    section {
+        padding: var(--section-padding-mobile) 0;
+    }
+    
+    /* Smaller profile picture on mobile */
+    .profile-picture {
+        width: 180px;
+        height: 180px;
+    }
+    
+    /* Adjust card padding and margins */
+    .project-card, .education-card, .experience-card, .skill-category {
+        padding: var(--card-padding-mobile);
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Make buttons larger for touch targets */
+    .btn, .download-btn, .social-link {
+        padding: 0.8rem 1.2rem;
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    /* Increase spacing between elements */
+    .social-links {
+        gap: 1rem;
+    }
+    
+    .footer-content {
+        padding: 1.5rem 1rem;
+    }
+}
+
+/* Improve touch interaction */
+.nav-link, .social-link, .btn, .download-btn {
+    touch-action: manipulation;
+}
+
+/* Fix canvas elements on mobile */
+canvas {
+    max-width: 100%;
+}
+
+/* Optimize animations for mobile */
+@media (max-width: 768px) {
+    .profile-frame {
+        animation: rotateSlow 20s linear infinite; /* Slower rotation on mobile */
+    }
+    
+    /* Reduce intensity of hover effects on mobile */
+    .project-card:hover, .education-card:hover, .experience-card:hover {
+        transform: translateY(-5px); /* Less dramatic movement */
+    }
+    
+    /* Disable 3D tilt on mobile for better performance */
+    .project-card, .education-card, .experience-card {
+        transform-style: flat;
+    }
+}
+
+/* Optimize layout for landscape mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        padding-top: 2rem;
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .profile-picture {
+        width: 140px;
+        height: 140px;
+        margin-bottom: 1rem;
+    }
 }
