@@ -1340,3 +1340,116 @@ canvas {
         margin-bottom: 1rem;
     }
 }
+
+/* Refined Certifications Section */
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.certification-card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 1.2rem;
+    box-shadow: var(--card-shadow);
+    border: 1px solid var(--border-color);
+    transition: var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    max-height: 220px; /* Control the height */
+}
+
+.certification-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.certification-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    gap: 0.8rem;
+}
+
+.certification-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    object-fit: contain;
+    background-color: #ffffff;
+    padding: 5px;
+    flex-shrink: 0;
+}
+
+.certification-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.certification-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    font-size: 0.85rem;
+}
+
+.certification-issuer {
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.certification-date {
+    color: var(--text-muted);
+    background: rgba(6, 182, 212, 0.1);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+
+.certification-link {
+    margin-top: auto;
+    align-self: flex-end;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    transition: var(--transition-fast);
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    background-color: rgba(6, 182, 212, 0.1);
+    border: 1px solid rgba(6, 182, 212, 0.2);
+}
+
+.certification-link:hover {
+    background-color: var(--accent-color);
+    color: var(--primary-bg);
+}
+
+.certification-link i {
+    font-size: 0.8rem;
+}
+
+/* Mobile responsiveness for certifications */
+@media (max-width: 768px) {
+    .certifications-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .certification-card {
+        padding: var(--card-padding-mobile, 1.2rem);
+    }
+}
