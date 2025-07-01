@@ -1,89 +1,96 @@
-/* filepath: /C:/Users/vissn/OneDrive/Desktop/MyWeb/shivansh-portfolio/assets/scripts/main.js */
+/* Modern Portfolio - Main JavaScript */
 document.addEventListener('DOMContentLoaded', () => {
     // Mobile menu toggle
     const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
+    const navLinksContainer = document.querySelector('.nav-links');
+    const navbar = document.querySelector('.navbar');
+    const homeSection = document.getElementById('home');
     
     mobileMenuToggle.addEventListener('click', () => {
         mobileMenuToggle.classList.toggle('active');
-        navLinks.classList.toggle('active');
+        navLinksContainer.classList.toggle('active');
     });
 
     // Close mobile menu when clicking a link
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', () => {
             mobileMenuToggle.classList.remove('active');
-            navLinks.classList.remove('active');
+            navLinksContainer.classList.remove('active');
         });
     });
 
-    // Hide navbar on scroll down, show on scroll up
+    // Navbar visibility control - consolidated scroll handler
     let lastScroll = 0;
-    const navbar = document.querySelector('.navbar');
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+    let scrollTimeout;
+    
+    // Function to check if home section is in viewport
+    function isHomeInViewport() {
+        if (!homeSection) return false;
         
-        if (currentScroll > lastScroll && currentScroll > 100) {
-            navbar.classList.add('hidden');
-        } else {
+        const rect = homeSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        
+        // Show navbar when home section occupies more than 80% of viewport
+        return rect.top < windowHeight * 0.2 && rect.bottom > windowHeight * 0.2;
+    }
+    
+    // Consolidated scroll handler
+    function handleScroll() {
+        if (!navbar) return;
+        
+        if (isHomeInViewport()) {
             navbar.classList.remove('hidden');
+            navbar.classList.add('home-only');
+        } else {
+            navbar.classList.add('hidden');
+            navbar.classList.remove('home-only');
         }
-        
-        lastScroll = currentScroll;
-    });
+    }
+    
+    // Performance optimized scroll handler
+    window.addEventListener('scroll', () => {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(handleScroll, 16);
+    }, { passive: true });
 
     // Smooth scroll for navigation links
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', e => {
             e.preventDefault();
-            const target = document.querySelector(link.getAttribute('href'));
-            target.scrollIntoView({ behavior: 'smooth' });
+            const targetId = link.getAttribute('href');
+            const target = document.querySelector(targetId);
+            
+            // If clicking home link, scroll to top and show navbar
+            if (targetId === '#home') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                navbar.classList.remove('hidden');
+                navbar.classList.add('home-only');
+            } else {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
         });
     });
 
-    // Active state for navigation
+    // Combined intersection observer for navigation and section reveal
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Update active navigation
                 document.querySelectorAll('.nav-link').forEach(link => {
                     link.classList.remove('active');
                     if (link.getAttribute('href').slice(1) === entry.target.id) {
                         link.classList.add('active');
                     }
                 });
-            }
-        });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('section').forEach(section => {
-        observer.observe(section);
-    });
-
-    // Animate background elements
-    const animatedBgSpans = document.querySelectorAll('.animated-bg span');
-    animatedBgSpans.forEach((span, index) => {
-        span.style.left = `${Math.random() * 100}%`;
-        span.style.animationDelay = `${Math.random() * 5}s`;
-        span.style.animationDuration = `${15 + Math.random() * 10}s`;
-    });
-
-    // Section reveal on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
+                
+                // Add visible class for animations
                 entry.target.classList.add('visible');
             }
         });
-    }, observerOptions);
+    }, { threshold: 0.3 });
 
     document.querySelectorAll('section').forEach(section => {
-        revealObserver.observe(section);
+        observer.observe(section);
     });
 
     // Typing animation reset
@@ -142,9 +149,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.style.transform = 'none';
                 entry.target.style.opacity = '1';
                 
-                // Add glitch effect on intersection
+                // Add subtle animation effect on intersection
                 if (entry.target.classList.contains('project-card')) {
-                    entry.target.style.animation = 'glitch 0.3s cubic-bezier(.25, .46, .45, .94)';
+                    entry.target.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        entry.target.style.transform = '';
+                    }, 300);
                 }
             }
         });
@@ -339,4 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fixIOSVhBug();
         }, 200);
     });
+    
+    // Initial check for navbar visibility
+    handleScroll();
 });

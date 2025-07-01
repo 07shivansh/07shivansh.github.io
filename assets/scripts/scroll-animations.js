@@ -35,12 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const yPos = scrollPosition * scrollSpeed;
             heroSection.style.backgroundPositionY = yPos + 'px';
         }
-        
-        // Parallax for background elements
-        document.querySelectorAll('.parallax-bg').forEach(element => {
-            const speed = element.dataset.speed || 0.2;
-            element.style.transform = `translateY(${scrollPosition * speed}px)`;
-        });
     });
     
     // Terminal typing effect for About section

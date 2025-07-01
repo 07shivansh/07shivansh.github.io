@@ -1,13 +1,14 @@
 {
   "name": "shivansh-portfolio",
-  "version": "1.0.0",
-  "description": "Personal profile website for Shivansh Vishwakarma, a BTech CSE student.",
-  "main": "src/assets/scripts/main.js",
+  "version": "2.0.0",
+  "description": "Modern personal portfolio website for Shivansh Vishwakarma, BTech CSE student",
+  "main": "index.html",
   "scripts": {
-    "start": "live-server src/pages",
-    "build": "echo 'Build step not defined'",
+    "start": "live-server .",
+    "build": "echo 'Static site - no build step required'",
     "test": "echo 'No tests defined'"
   },
+  "keywords": ["portfolio", "website", "personal", "developer", "student"],
   "author": "Shivansh Vishwakarma",
   "license": "MIT",
   "dependencies": {},
